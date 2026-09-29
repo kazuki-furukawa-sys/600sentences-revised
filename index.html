@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英作文 GRAND PRIX</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --panel: #12121a;
+    --border: #2a2a3a;
+    --accent: #00e5ff;
+    --accent2: #ff4081;
+    --gold: #ffd700;
+    --green: #00e676;
+    --red: #ff1744;
+    --text: #e8e8f0;
+    --muted: #6060a0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(0,229,255,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(255,64,129,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(0,229,255,0.4);
+  }
+  .header p {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--muted);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* PANELS */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-title::before {
+    content: '▶';
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  /* SECTION SELECT */
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .section-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.78rem;
+    text-align: left;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .section-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .section-btn.active {
+    background: rgba(0,229,255,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* NUMBER RANGE SELECT */
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .range-label { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+  .range-input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    width: 72px;
+    text-align: center;
+  }
+  .range-input:focus { outline: none; border-color: var(--accent); }
+
+  .quick-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .quick-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.15s;
+  }
+  .quick-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ORDER MODE */
+  .mode-row { display: flex; gap: 10px; }
+  .mode-btn {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .mode-btn.active {
+    background: rgba(255,64,129,0.12);
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+  .mode-btn:hover:not(.active) { border-color: var(--border); color: var(--text); }
+  .mode-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+  /* START BTN */
+  .start-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), #0097a7);
+    border: none;
+    color: #000;
+    padding: 18px;
+    border-radius: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+  .start-btn:active { transform: translateY(0); }
+
+  /* GAME SCREEN */
+  #game-screen { display: none; }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .stat-val.red { color: var(--red); }
+  .stat-val.green { color: var(--green); }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 28px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .q-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .q-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .q-progress {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .q-japanese {
+    font-size: clamp(1.1rem, 3vw, 1.45rem);
+    line-height: 1.7;
+    color: var(--text);
+    font-weight: 700;
+    text-align: center;
+    padding: 8px 0 4px;
+  }
+
+  /* ANSWER INPUT */
+  .answer-wrap { position: relative; }
+  .answer-input {
+    width: 100%;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .answer-input:focus { border-color: var(--accent); }
+  .answer-input.correct { border-color: var(--green); background: rgba(0,230,118,0.06); }
+  .answer-input.wrong { border-color: var(--red); background: rgba(255,23,68,0.06); }
+  .answer-input:disabled { opacity: 0.7; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 14px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  .feedback.correct { background: rgba(0,230,118,0.1); border: 1px solid var(--green); }
+  .feedback.wrong { background: rgba(255,23,68,0.08); border: 1px solid var(--red); }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .feedback-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .feedback-answer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+  .feedback-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; letter-spacing: 2px; }
+
+  /* GAME BTNS */
+  .game-btns { display: flex; gap: 10px; margin-top: 14px; }
+  .btn-submit {
+    flex: 2;
+    background: var(--accent);
+    border: none;
+    color: #000;
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-submit:hover { opacity: 0.85; }
+  .btn-skip {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-skip:hover { border-color: var(--accent2); color: var(--accent2); }
+  .btn-next {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: none;
+  }
+  .btn-next:hover { background: rgba(0,229,255,0.1); }
+  .btn-quit {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: none;
+  }
+  .btn-quit:hover { border-color: var(--accent2); color: var(--accent2); }
+  .btn-end {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 14px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-end:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* RESULT SCREEN */
+  #result-screen { display: none; }
+  .result-hero {
+    text-align: center;
+    padding: 40px 0 32px;
+  }
+  .result-grade {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 15vw, 7rem);
+    line-height: 1;
+    background: linear-gradient(135deg, var(--gold), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+  .result-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--text);
+    margin-top: 8px;
+    letter-spacing: 3px;
+  }
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .result-stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 12px;
+    text-align: center;
+  }
+  .result-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+  .result-stat-val.g { color: var(--green); }
+  .result-stat-val.r { color: var(--red); }
+  .result-stat-val.b { color: var(--muted); }
+  .result-stat-label { font-size: 0.7rem; letter-spacing: 2px; color: var(--muted); margin-top: 4px; }
+
+  /* MISSED LIST */
+  .missed-section { margin-top: 20px; }
+  .missed-title {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .missed-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 0.88rem;
+  }
+  .missed-ja { color: var(--muted); margin-bottom: 6px; font-size: 0.82rem; }
+  .missed-en { font-family: 'JetBrains Mono', monospace; color: var(--text); line-height: 1.5; }
+
+  .retry-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 16px;
+  }
+  .retry-btn:hover { background: rgba(0,229,255,0.1); }
+  .back-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 13px;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .back-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 4px;
+    height: 4px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  /* answer diff */
+  .diff-wrap { margin-top: 8px; }
+  .diff-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 2px; margin-bottom: 3px; }
+  .diff-text { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 1.6; }
+  .diff-ok { color: var(--green); }
+  .diff-bad { color: var(--red); text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .section-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .result-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>英作文 GRAND PRIX</h1>
+    <p>NANSHUN ENGLISH · COMPOSITION CHALLENGE</p>
+  </div>
+
+  <!-- SETUP SCREEN -->
+  <div id="setup-screen">
+
+    <!-- SECTION SELECT (複数選択可) -->
+    <div class="panel">
+      <div class="panel-title">SECTION を選ぶ(複数選択可)</div>
+      <div class="quick-btns" style="margin-bottom:12px;">
+        <button class="quick-btn" onclick="selectAllSections()">全選択</button>
+        <button class="quick-btn" onclick="clearSections()">全解除</button>
+        <span class="range-label" id="sel-count" style="align-self:center;">0 セクション選択中</span>
+      </div>
+      <div class="section-grid" id="section-grid"></div>
+    </div>
+
+    <!-- QUESTION RANGE -->
+    <div class="panel">
+      <div class="panel-title">練習する番号</div>
+      <div class="range-row" style="margin-bottom:12px;">
+        <span class="range-label">No.</span>
+        <input type="number" class="range-input" id="q-from" value="1" min="1" max="15">
+        <span class="range-label">〜</span>
+        <input type="number" class="range-input" id="q-to" value="15" min="1" max="15">
+        <span class="range-label">番</span>
+      </div>
+      <div class="quick-btns">
+        <button class="quick-btn" onclick="setRange(1,5)">1–5</button>
+        <button class="quick-btn" onclick="setRange(6,10)">6–10</button>
+        <button class="quick-btn" onclick="setRange(11,15)">11–15</button>
+        <button class="quick-btn" onclick="setRange(1,15)">全部</button>
+      </div>
+    </div>
+
+    <!-- ORDER MODE -->
+    <div class="panel">
+      <div class="panel-title">出題順序</div>
+      <div class="mode-row">
+        <button class="mode-btn active" id="mode-order" onclick="setMode('order')">
+          <span class="mode-icon">📋</span>順番通り
+        </button>
+        <button class="mode-btn" id="mode-random" onclick="setMode('random')">
+          <span class="mode-icon">🔀</span>ランダム
+        </button>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startGame()">▶ START GRAND PRIX</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="game-screen">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">PROGRESS</div>
+        <div class="stat-val" id="stat-progress">0/0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">CORRECT</div>
+        <div class="stat-val green" id="stat-correct">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">WRONG</div>
+        <div class="stat-val red" id="stat-wrong">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">SECTION</div>
+        <div class="stat-val" id="stat-section" style="font-size:1rem;padding-top:6px;">—</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-badge" id="q-section-label">—</span>
+        <span class="q-progress" id="q-num-label">— / —</span>
+      </div>
+      <div class="q-japanese" id="q-japanese">—</div>
+    </div>
+
+    <div class="answer-wrap">
+      <input type="text" class="answer-input" id="answer-input" placeholder="英語で入力してEnterで確定..." autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+
+    <div class="feedback" id="feedback">
+      <div class="feedback-icon" id="feedback-icon"></div>
+      <div class="feedback-label">ANSWER</div>
+      <div class="feedback-answer" id="feedback-answer"></div>
+      <div class="diff-wrap" id="diff-wrap"></div>
+    </div>
+
+    <div class="game-btns">
+      <button class="btn-submit" id="btn-submit" onclick="submitAnswer()">SUBMIT</button>
+      <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">SKIP</button>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">NEXT →</button>
+      <button class="btn-quit" id="btn-quit" onclick="quitGame()">QUIT</button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen">
+    <div class="result-hero">
+      <div class="result-grade" id="result-grade">—</div>
+      <div class="result-score" id="result-score">0 / 0</div>
+    </div>
+    <div class="result-grid">
+      <div class="result-stat">
+        <div class="result-stat-val g" id="res-correct">0</div>
+        <div class="result-stat-label">CORRECT</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val r" id="res-wrong">0</div>
+        <div class="result-stat-label">WRONG</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-val b" id="res-skipped">0</div>
+        <div class="result-stat-label">SKIPPED</div>
+      </div>
+    </div>
+
+    <div class="missed-section" id="missed-section"></div>
+
+    <button class="retry-btn" onclick="retryGame()">↺ RETRY</button>
+    <button class="back-btn" onclick="backToSetup()">← BACK TO SETUP</button>
+  </div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const SECTIONS = [
+  { id: 1, title: "教室英語", data: [
+    ["みなさん準備はいいですか。","Are you ready to begin ?"],
+    ["自己紹介をします。","I'd like to introduce myself."],
+    ["終わりましたか。次は私の番です。","Have you finished ? It's my turn."],
+    ["もう一度言ってください。","Could you say that again, please ?"],
+    ["質問があります。","May I ask a question ?"],
+    ["20ページの5行目を見なさい。","Look at line 5 on page 20."],
+    ["すみませんが，それはどういうつづりですか。","Excuse me, but how do you spell that ?"],
+    ["次回の予習は何をすればいいですか。","What should we study for the next class ?"],
+    ["「発音する」という単語の名詞形は何ですか。","What is the noun for the word \"pronounce\" ?"],
+    ["プリントを後ろから集めてくれますか。","Can you collect the papers from the back ?"],
+    ["improve という語を辞典で調べなさい。","Look up the word \"improve\" in your dictionary."],
+    ["読み終えた人は手を挙げてください。","If you have finished reading, please raise your hand."],
+    ["山元先生に用事があります。入ってもいいですか。","I need to talk to Mr. Yamamoto. May I come in ?"],
+    ["宿題の提出期限は来週の火曜日ですか。","Should we submit the homework by next Tuesday ?"],
+    ["言いたいことは分かりますが，賛成できません。","I see your point, but I'm afraid I cannot agree with you."],
+  ]},
+  { id: 2, title: "文型（１）", data: [
+    ["学校は８時に始まります。","School begins at eight."],
+    ["彼女はたいていバスで学校に来ます。","She usually comes to school by bus."],
+    ["彼は去年ヨーロッパ中を旅行しました。","He traveled all over Europe last year."],
+    ["伯父は先週，アメリカに出発しました。","My uncle left for America last week."],
+    ["１年は１２か月です。","There are twelve months in a year."],
+    ["スミス先生は職員室にいます。","Ms. Smith is in the teachers' room."],
+    ["太陽は東から昇り，西に沈みます。","The sun rises in the east and sets in the west."],
+    ["祖父は７０歳です。","My grandfather is seventy years old."],
+    ["彼女は小さいとき，恥ずかしがり屋でした。","She was shy when she was young."],
+    ["彼は１週間かそこらで元気になるでしょう。","He will get well in a week or so."],
+    ["この部屋では静かにしていなければいけません。","You must keep quiet in this room."],
+    ["顔色が悪いようですが，どうしたのですか。","What's the matter ? You look pale."],
+    ["このパイはおいしい。","This pie tastes good."],
+    ["あなたの考えはとても良さそうですね。","Your idea sounds great."],
+    ["彼はその結果に失望しているようです。","He seems disappointed with the result."],
+  ]},
+  { id: 3, title: "文型（２）", data: [
+    ["私は彼女たち全員を知っています。","I know all of them."],
+    ["私はその本をナンシーから借りました。","I borrowed the book from Nancy."],
+    ["パーティーは楽しかったですか。","Did you enjoy yourself at the party ?"],
+    ["彼のおじさんはマイアミでレストランを経営しています。","His uncle runs a restaurant in Miami."],
+    ["彼女の弟は外国の雑誌をたくさん持っています。","Her brother has a lot of foreign magazines."],
+    ["私たちはその問題について何時間も議論しました。","We discussed the issue for hours."],
+    ["私は彼が正直な人だと信じています。","I believe that he is an honest person."],
+    ["牛は私たちにミルクを与えてくれます。","Cows give us milk."],
+    ["誰がそんな大金をあなたに貸したのですか。","Who lent you so much money ?"],
+    ["先日，おばさんが私に辞典を買ってくれました。","My aunt bought me a dictionary the other day."],
+    ["この薬はいくらか効くでしょう。","This medicine will do you some good."],
+    ["あなたの写真をいつか私に見せてくれませんか。","Will you show me your photos sometime ?"],
+    ["この話を読めば，私たちは前向きであるべきだと分かるでしょう。","This story tells us that we should be positive."],
+    ["東京駅への行き方を教えていただけませんか。","Could you tell me how to get to Tokyo Station ?"],
+    ["彼女に明日来られるかどうか尋ねてくださいませんか。","Would you ask her if she can come tomorrow ?"],
+  ]},
+  { id: 4, title: "文型（３）", data: [
+    ["私をジムと呼んでくださっていいですよ。","You can call me Jim."],
+    ["彼らは自分たちの赤ちゃんをエマと名付けました。","They named their baby Emma."],
+    ["妹はいつも部屋をきれいにしています。","My sister always keeps her room clean."],
+    ["読んでみたら，その本はたいへん興味深いことが分かりました。","I found the book very interesting."],
+    ["ドアを開けっ放しにしておいてはいけません。","Don't leave the door open."],
+    ["本当のことを知れば君は気が楽になるでしょう。","The truth will set you free."],
+    ["私たちは彼を学級委員長に選びました。","We elected him class president."],
+    ["その知らせを聞いて私はうれしくなりました。","The news made me happy."],
+    ["どうして彼はそんなに怒ったのですか。","What made him so angry ?"],
+    ["今の私があるのはあなたのおかげです。","You have made me what I am."],
+    ["私たちはエミリーが通りを横切るのを見ました。","We saw Emily walk across the street."],
+    ["彼女は赤ちゃんが泣いているのを耳にしました。","She heard her baby crying."],
+    ["私は散髪をしてもらわなければなりません。","I must have my hair cut."],
+    ["どうぞおくつろぎください。","Please make yourself at home."],
+    ["父は混んだ列車の中で財布を盗まれました。","My father had his wallet stolen on the crowded train."],
+  ]},
+  { id: 5, title: "時制の基本", data: [
+    ["私は吹奏楽部に入っています。","I belong to the brass band club."],
+    ["私はいつも朝食にトーストを食べます。","I always have toast for breakfast."],
+    ["習うより慣れよ。","Practice makes perfect."],
+    ["電車はあと１時間出ません。","The train doesn't leave for another hour."],
+    ["弟が昼食を作ってくれました。","My little brother cooked me lunch."],
+    ["彼は放課後毎日野球をしていました。","He played baseball after school every day."],
+    ["私はその当時，善悪の判断がつきませんでした。","I didn't know right from wrong at that time."],
+    ["午後に雨が降るでしょう。","It will rain in the afternoon."],
+    ["彼女が戻ったら，あなたに電話するように伝えますね。","I will tell her to call you when she comes back."],
+    ["私は来月伯父を訪ねるつもりだ。","I am going to visit my uncle next month."],
+    ["具合が良くなったら，すぐ学校に行くよ。","As soon as I get better, I will go to school."],
+    ["来月，ハワイに行こうかと思っています。","I am thinking of going to Hawaii next month."],
+    ["インターネットで情報を探しているところです。","I am looking for the information on the Internet."],
+    ["女の子たちはラジオで音楽を聞いていました。","The girls were listening to music on the radio."],
+    ["明日の今頃はハワイの海辺で寝そべっているでしょう。","I'll be lying on a beach in Hawaii about this time tomorrow."],
+  ]},
+  { id: 6, title: "完了形（１）", data: [
+    ["彼らはもう朝食をとりました。","They have already had breakfast."],
+    ["私はまだ宿題を済ませていません。","I've not finished my homework yet."],
+    ["私はこの小説を以前読んだことがあります。","I have read this novel before."],
+    ["あなたは富士山に登ったことがありますか。「いいえ，ありません」","\"Have you ever climbed Mt. Fuji ?\" \"No, I haven't.\""],
+    ["彼を見送りに空港へ行って来たところです。","I have just been to the airport to see him off."],
+    ["彼女は仕事でアメリカへ行っています。","She has gone to the United States on business."],
+    ["あなたはカメラをどうしましたか。「なくしてしまいました」","\"What have you done with your camera ?\" \"I have lost it.\""],
+    ["今月は雨が多かったです。","We have had a lot of rain this month."],
+    ["もうベルが鳴りましたか。「いいえ，まだです」","\"Has the bell rung yet ?\" \"No, not yet.\""],
+    ["私はこんなに美しい夕日を見たことがありません。","I have never seen such a beautiful sunset."],
+    ["私は彼女が文句を言うのを聞いたことがありません。","I have never heard her complain."],
+    ["あなたは何回京都へ行ったことがありますか。「２回あります」","\"How many times have you been to Kyoto ?\" \"I have been there twice.\""],
+    ["彼女とは長いこと会っていません。","I've not seen her for a long time."],
+    ["彼が亡くなってから３年になります。","He has been dead for three years."],
+    ["私たちが新しい家に引っ越して５年たちました。","Five years have passed since we moved to our new house."],
+  ]},
+  { id: 7, title: "完了形（２）", data: [
+    ["彼は１週間前から病気です。","He has been sick for a week."],
+    ["彼から３年間連絡がありません。","We haven't heard from him for three years."],
+    ["君はどのくらいの期間，英語の勉強をしていますか。","How long have you been studying English ?"],
+    ["私はこちらに５か月前から住んでいます。","I have been living here for five months."],
+    ["私はこの２週間，伯父のところに滞在しています。","I have been staying at my uncle's for the last two weeks."],
+    ["私たちは子どものときからお互いに知っています。","We have known each other since we were children."],
+    ["私はずっと期末考査の準備で忙しいです。","I've been busy preparing for the final examination."],
+    ["あなたは今までずっと何をしていたのですか。","What have you been doing all this time ?"],
+    ["私がバス停に着いたとき，バスはもう出ていました。","When I got to the bus stop, the bus had already left."],
+    ["私はすぐ彼だと分かりました。というのは以前会ったことがあったからです。","I recognized him at once, for I had seen him before."],
+    ["父はスイスで買った時計を私にくれました。","My father gave me the watch that he had bought in Switzerland."],
+    ["私たちが見舞いに行ったとき，彼女が入院してすでに１週間たっていました。","She had been in the hospital for a week when we visited her."],
+    ["次の土曜日で私たちは結婚して１０年目になります。","Next Saturday we will have been married for ten years."],
+    ["あなたが帰って来るころまでには，彼は家を出ているでしょう。","He will have left home by the time you come back."],
+    ["その雑誌を読んでしまったら私に貸してください。","Please lend me the magazine when you have finished it."],
+  ]},
+  { id: 8, title: "疑問文（１）", data: [
+    ["あなたは自転車に乗れますか。","Can you ride a bicycle ?"],
+    ["明日の晩はお暇ですか。","Will you be free tomorrow evening ?"],
+    ["あなたは窓を開けたまま寝たのですか。","Did you sleep with the windows open ?"],
+    ["君は彼にお礼状を書かなかったのですか。「いいえ，書きました」","\"Didn't you write him a letter of thanks ?\" \"Yes, I did.\""],
+    ["彼女はイギリス人ですか，アメリカ人ですか。","Is she British or American ?"],
+    ["コーヒーと紅茶のどちらがお好きですか。","Which do you like better, coffee or tea ?"],
+    ["コーヒーはどうしますか，ブラックにしますか，ミルクを入れますか。","How do you like your coffee, black or with milk ?"],
+    ["カナダは美しい国ですね。","Canada is a beautiful country, isn't it ?"],
+    ["君はゆうべ彼女に電話しなかったのですね。","You didn't call her last night, did you ?"],
+    ["手伝いに来てくださいね。","Come and help us, will you ?"],
+    ["お茶を飲みましょうか。","Let's have a cup of tea, shall we ?"],
+    ["窓を割ったのは誰ですか。","Who broke the window ?"],
+    ["いつ大学を卒業しましたか。","When did you graduate from university ?"],
+    ["学校にはどうやって行きますか。「自転車で行きます」","\"How do you go to school ?\" \"By bike.\""],
+    ["どうして君はそんな失礼なことを彼女に言ったのですか。","Why did you say such a rude thing to her ?"],
+  ]},
+  { id: 9, title: "疑問文（２）", data: [
+    ["ブラジルの首都はどこですか。","What is the capital of Brazil ?"],
+    ["この市の人口はどのくらいですか。","What is the population of this city ?"],
+    ["犬とオオカミの違いは何ですか。","What is the difference between dogs and wolves ?"],
+    ["なぜあなたはそこへ行ったのですか。","What did you go there for ?"],
+    ["新しいお住まいはどんな感じですか。","What is your new house like ?"],
+    ["あなたはどの科目が一番好きですか。","What subject do you like best ?"],
+    ["これは誰の眼鏡ですか。「私のです」","\"Whose glasses are these ?\" \"They are mine.\""],
+    ["なぜ彼が学校を欠席しているか知っていますか。","Do you know why he is absent from school ?"],
+    ["なぜ彼女はあなたに怒ったと思いますか。","Why do you think she got angry with you ?"],
+    ["いつまでホストファミリーのお宅に滞在する予定ですか。","How long are you going to stay with your host family ?"],
+    ["あとどのくらいでここを出発しますか。「１０分したら出発します」","\"How soon are we leaving here ?\" \"In ten minutes.\""],
+    ["飛行機で成田からハワイまで行くのにどれくらい時間がかかりますか。","How long does it take to fly from Narita to Hawaii ?"],
+    ["君は先月は本代にいくら使いましたか。","How much money did you spend on books last month ?"],
+    ["ここのバスの便は何分おきですか。「１０分おきです」","\"How often do the buses run here ?\" \"Every ten minutes.\""],
+    ["ひょっとして佐藤さんのお住まいをご存じではありませんか。","Do you happen to know where Mr. Sato lives ?"],
+  ]},
+  { id: 10, title: "命令文・感嘆文", data: [
+    ["足元に気をつけて。","Watch your step !"],
+    ["他人には親切にしなさい。","Be kind to other people."],
+    ["彼はなんて走るのが速いのでしょう！","What a fast runner he is !"],
+    ["この庭園はなんて美しいのでしょう！","How beautiful this garden is !"],
+    ["私の仕事を手伝ってください。","Please help me with my work."],
+    ["塩を取ってください。「はい，どうぞ」","\"Pass me the salt, please.\" \"Here it is.\""],
+    ["口いっぱいにほおばって話をしてはいけません。","Don't talk with your mouth full."],
+    ["子どもたちを駐車場で遊ばせないようにしなさい。","Don't let the children play in the parking lot."],
+    ["学校に遅れてはいけません。","Don't be late for school."],
+    ["その計画がうまくいったかどうかを確認してみましょう。","Let's see whether the plan worked."],
+    ["きっとすぐ手紙をくださいね。","Be sure to write me soon."],
+    ["かぜをひかないように気をつけなさい。","Be careful not to catch cold."],
+    ["先生に尋ねなさい，そうすればどんな本を読んだらいいか教えてくださるでしょう。","Ask your teacher, and she'll tell you what book you should read."],
+    ["タクシーに乗りなさい，そうしないと急行列車に遅れますよ。","Take a taxi, or you'll miss the express."],
+    ["今日できることを明日まで延ばすな。","Never put off until tomorrow what you can do today."],
+  ]},
+  { id: 11, title: "助動詞（１）", data: [
+    ["私はあなたのためなら何でもします。","I will do anything for you."],
+    ["どういうご用件でしょうか。","What can I do for you ?"],
+    ["僕は君ほどテニスはうまくありません。","I can't play tennis as well as you."],
+    ["ぜひまたおいでください。","Do come again."],
+    ["明日の午後は雨が降るかもしれません。","It may rain tomorrow afternoon."],
+    ["あなたの隣に座ってもよろしいですか。「どうぞ」","\"May I sit next to you ?\" \"Of course.\""],
+    ["窓を開けましょうか。「ええ，お願いします」","\"Shall I open the window ?\" \"Yes, please.\""],
+    ["今出たらバスに間に合うでしょうか。「ええ，間に合うでしょう」","\"Will I be in time for the bus if I go now ?\" \"Yes, you will.\""],
+    ["君のお母さんはいつ中国から帰国なさいますか。","When will your mother return from China ?"],
+    ["ホテルまで私を乗せていってくれませんか。「もちろんですとも」","\"Will you give me a ride to the hotel ?\" \"By all means.\""],
+    ["博物館へ行く道をどうか教えていただけませんか。","Would you please tell me the way to the museum ?"],
+    ["エンジンはどうしてもかかりませんでした。","The engine wouldn't start."],
+    ["あなたのご親切は決して忘れません。","I shall never forget your kindness."],
+    ["今度の日曜日に遊びに来ませんか。","Won't you come and see me next Sunday ?"],
+    ["あなたの赤ちゃんは数週間したら歩けるようになるでしょう。","Your baby will be able to walk in a few weeks."],
+  ]},
+  { id: 12, title: "助動詞（２）", data: [
+    ["彼女は今晩，次の授業の予習をしなければなりません。","She must prepare for the next class tonight."],
+    ["スープを飲むときは音をたててはいけません。","You must not make a noise when you eat soup."],
+    ["彼は彼女のメールアドレスを知っているに違いない。","He must know her email address."],
+    ["ラジオを消さないといけませんか。「いいえ，それには及びません」","\"Do I have to turn off the radio ?\" \"No, you don't have to.\""],
+    ["その報道はいったい本当だろうか。「いや，本当のはずがない」","\"Can the report be true ?\" \"No, it can't be true.\""],
+    ["君はもっと一生懸命に勉強すべきです。","You ought to study harder."],
+    ["今すぐ，家に帰りなさい。","You had better go home right now."],
+    ["私は毎週日曜日に海岸をよく散歩したものです。","I used to walk along the seashore every Sunday."],
+    ["彼女は休日にはよく私たちのところに遊びに来たものでした。","She would often come and see us on holidays."],
+    ["私は鍵をどこかに落としてしまったに違いない。","I must have dropped my keys somewhere."],
+    ["彼が本当のことを言ったはずがありません。","He can't have told the truth."],
+    ["君はご両親に従うべきだったのに。","You should have obeyed your parents."],
+    ["私たちは嵐のために出発を延期しなければなりませんでした。","We had to put off our departure because of the storm."],
+    ["緊急の際は，ただこのボタンを押しさえすればいいのです。","In case of emergency, you only have to press this button."],
+    ["こんないい天気の日は家にいるよりむしろ出かけたいです。","I would rather go out than stay home in such nice weather."],
+  ]},
+  { id: 13, title: "受動態（１）", data: [
+    ["『ハムレット』はシェイクスピアによって書かれました。","\"Hamlet\" was written by Shakespeare."],
+    ["ローマは１日にして成らず。","Rome was not built in a day."],
+    ["あなたはパーティーに招待されましたか。","Were you invited to the party ?"],
+    ["カナダでは何語が話されていますか。","What languages are spoken in Canada ?"],
+    ["ロンはハリーに笑われました。","Ron was laughed at by Harry."],
+    ["私は公園で見知らぬ人から話しかけられました。","I was spoken to by a stranger in the park."],
+    ["うちの犬が危うくトラックにひかれるところでした。","Our dog was nearly run over by a truck."],
+    ["青色LEDは日本人科学者によって発明されました。","The blue LED was invented by Japanese scientists."],
+    ["東京は２０２０年のオリンピック開催地として選ばれました。","Tokyo was chosen as the 2020 Olympic host."],
+    ["幸いなことに，その事故による死者はいませんでした。","Fortunately, nobody was killed in the accident."],
+    ["私の車は今，修理中です。","My car is being fixed now."],
+    ["この詩は誰が書いたのですか。","Who was this poem written by ?"],
+    ["この本は多くの人々に読まれるでしょう。","This book will be read by lots of people."],
+    ["ドアは開けっ放しにしておいてはいけません。","The door must not be left open."],
+    ["その少年はおばさんの世話を受けるでしょう。","The boy will be taken care of by his aunt."],
+  ]},
+  { id: 14, title: "受動態（２）", data: [
+    ["２人の男性が昨夜の火事でけがをしました。","Two men got injured in the fire last night."],
+    ["そのニュースを聞いて驚きました。","I was surprised at the news."],
+    ["私の妹はクラシック音楽に興味があります。","My sister is interested in classical music."],
+    ["その話はほとんどの子どもに知られています。","The story is known to most children."],
+    ["彼女の目は涙でいっぱいでした。","Her eyes were filled with tears."],
+    ["私たちはその結果に満足しています。","We are satisfied with the result."],
+    ["私たちは家に帰る途中，にわか雨にあいました。","We were caught in a shower on our way home."],
+    ["彼らは新しい家が気に入っています。","They are pleased with their new house."],
+    ["エベレスト山は１年中雪に覆われています。","Mt. Everest is covered with snow all year round."],
+    ["その書類はまだ送付されていません。","The document has not been sent yet."],
+    ["それ以来彼の消息は途絶えています。","He has not been heard of ever since."],
+    ["彼女がコンビニに入っていくのが見えました。","She was seen entering the convenience store."],
+    ["彼女は１時間以上待たされました。","She was made to wait for over an hour."],
+    ["彼はユーモアの分かる人だそうです。","It is said that he has a sense of humor."],
+    ["彼女のお母さんはとても思いやりがあるそうです。","Her mother is said to be very considerate."],
+  ]},
+  { id: 15, title: "否定表現（１）", data: [
+    ["私はスペイン語がまったく分かりません。","I don't know Spanish at all."],
+    ["私は最近，まったく手紙を書きません。","I don't write any letters these days."],
+    ["彼らもその結果を知らないかもしれません。","They may not know the results either."],
+    ["ケイトは肉をまったく食べません。","Kate never eats meat."],
+    ["私は今，お金の持ち合わせがありません。","I have no money with me now."],
+    ["今日は特に何もすることはありませんでした。","I had nothing special to do today."],
+    ["彼女はもうパースに住んでいません。","She no longer lives in Perth."],
+    ["雨は降らないと思います。「私もそう思います」","\"I don't think it will rain.\" \"Neither do I.\""],
+    ["今夜パーティーに来られますか。「残念ながら行けません」","\"Can you come to the party tonight ?\" \"I'm afraid not.\""],
+    ["彼のことを悪く言う人はほとんどいません。","Few people speak ill of him."],
+    ["彼女は彼の話にほとんど興味を示しませんでした。","She showed little interest in his story."],
+    ["あなたにここで会うなんて思いもしませんでした。","Little did I expect to meet you here."],
+    ["私は週末，めったに外出しません。","I rarely go out on weekends."],
+    ["この解決策は決して完璧ではありません。","This solution is far from perfect."],
+    ["彼女は決して約束を破るような人ではありません。","She is the last person to break a promise."],
+  ]},
+  { id: 16, title: "否定表現（２）", data: [
+    ["この庭には花はまったく咲いていません。","There are no flowers in this garden."],
+    ["私は鉛筆も消しゴムも忘れました。","I didn't bring either a pencil or an eraser."],
+    ["その姉妹は２人ともその話を知りません。","Neither of the sisters knows the story."],
+    ["学生たちは誰も講義に出席していませんでした。","None of the students were present at the lecture."],
+    ["誰もその質問に答えることができませんでした。","Nobody was able to answer the question."],
+    ["誰もが宇宙飛行士になれるわけではありません。","Not everyone can be an astronaut."],
+    ["教授全員がその会議に出席していたわけではありません。","Not all the professors attended the conference."],
+    ["お金持ちが必ずしも幸せとは限りません。","The rich are not always happy."],
+    ["私は彼の両親をどちらも知っているわけではありません。","I don't know both of his parents."],
+    ["車を運転するときは，いくら注意してもしすぎることはありません。","You cannot be too careful when you drive."],
+    ["失敗は決して時間のむだではありません。","Failure is by no means a waste of time."],
+    ["この問題はまだ解決されていません。","This problem has yet to be solved."],
+    ["ボブは時間どおりに来ませんでした。","Bob failed to come on time."],
+    ["この状況は私たちの手に負えません。","This situation is beyond our control."],
+    ["１９９４年になってやっと南アフリカでアパルトヘイトが全廃されました。","It was not until 1994 that apartheid was abolished in South Africa."],
+  ]},
+  { id: 17, title: "不定詞（１）", data: [
+    ["いつかインドを訪れたいものです。","I would like to visit India someday."],
+    ["英語で話すように努力します。","I'll try to speak in English."],
+    ["私は彼らを動物園に連れて行くと約束しました。","I promised to take them to the zoo."],
+    ["とうとうお金が不足し始めました。","Finally, we began to run short of money."],
+    ["明かりを消し忘れないようにしてください。","Don't forget to turn off the lights."],
+    ["次に何をしたらいいか教えてください。","Tell me what to do next."],
+    ["私は辞典を引けるようにならなければなりません。","I must learn to use a dictionary."],
+    ["彼女があなたに腹を立てているのはもっともです。","It is natural for her to be angry with you."],
+    ["早寝早起きは健康にいい。","It is good for your health to keep regular hours."],
+    ["よいご助言をいただき，ありがとうございます。","It is nice of you to give me good advice."],
+    ["パソコンを修理してもらうのに９０ドルかかりました。","It cost me ninety dollars to have my PC repaired."],
+    ["彼と仲よくやっていくことは困難だと分かりました。","I found it difficult to get along with him."],
+    ["彼は医師にすぐ診てもらう必要があると思いました。","He thought it necessary to see the doctor at once."],
+    ["彼女がその仕事を１日で終えるのは不可能だと私は思いました。","I thought it impossible for her to finish the work in a day."],
+    ["私は間食をしないことにしています。","I make it a rule not to eat between meals."],
+  ]},
+  { id: 18, title: "不定詞（２）", data: [
+    ["何か冷たい飲み物はいかがですか。","Would you like something cold to drink ?"],
+    ["彼は扶養家族が多い。","He has a large family to support."],
+    ["何か書くものを貸してください。","Please lend me something to write with."],
+    ["英語を学ぶのに一番いい方法は何ですか。","What is the best way to learn English ?"],
+    ["私はそれとはまったく関係ありません。","I have nothing to do with it."],
+    ["父は１日おきに花に水をやるように私に言いました。","My father told me to water the flowers every other day."],
+    ["チョークを２本持ってきてもらいたい。","I want you to bring me two pieces of chalk."],
+    ["私はあなたが一等賞を取ることを期待しています。","I expect you to win first prize."],
+    ["彼らに部屋の掃除をさせましょう。","I'll get them to clean the room."],
+    ["秘書にこのＥメールを翻訳させましょう。","I'll have my secretary translate this email."],
+    ["何か質問があれば知らせてください。","Please let me know if you have any questions."],
+    ["君はなぜそんなふうに考えるのですか。","What makes you think so ?"],
+    ["少女が助けを求めて叫ぶのが聞こえました。","I heard a girl shout for help."],
+    ["私たちはグリーンさんが子どもたちをしかるのをめったに見ません。","We seldom see Mr. Green scold his children."],
+    ["彼女は涙がほおを流れるのを感じました。","She felt tears run down her cheeks."],
+  ]},
+  { id: 19, title: "不定詞（３）", data: [
+    ["私たちの監督は気難しい。","Our manager is hard to please."],
+    ["この川は泳ぐには安全ではありません。","This river is not safe to swim in."],
+    ["彼女は自分のことは自分でやれる年頃です。","She is old enough to take care of herself."],
+    ["彼の健康は日増しに回復しつつあるように思えます。","His health seems to be improving day by day."],
+    ["彼女はきっと試験に合格するでしょう。","She is sure to succeed in the examination."],
+    ["この本は難しすぎて私には読めません。","This book is too difficult for me to read."],
+    ["あなたはどうして彼を知るようになったのですか。","How did you get to know him ?"],
+    ["私の祖父は１００歳まで生きました。","My grandfather lived to be a hundred years old."],
+    ["私はいい席を取るために早く出かけました。","I left early in order to get a good seat."],
+    ["彼は入学試験に失敗しないように一生懸命勉強しました。","He worked hard so as not to fail the entrance exam."],
+    ["たいへん長くお待たせしてすみません。","I am sorry to have kept you waiting so long."],
+    ["彼女はそのニュースを聞いて失望しました。","She was disappointed to hear the news."],
+    ["彼は二度と家族に会うことはありませんでした。","He was never to see his family again."],
+    ["本当のことを言えば，私たちは彼を信用できません。","To tell the truth, we can't trust him."],
+    ["彼女は英語はもちろんのこと，フランス語も話せます。","She can speak French, not to mention English."],
+  ]},
+  { id: 20, title: "動名詞（１）", data: [
+    ["早起きはよい習慣です。","Getting up early is a good habit."],
+    ["私たちはトランプをして楽しみました。","We enjoyed playing cards."],
+    ["彼は絵をかくのが上手です。","He is good at drawing pictures."],
+    ["彼女は子ども扱いされるのが好きではありません。","She doesn't like being treated like a child."],
+    ["映画に行きましょうか。","How about going to the movies ?"],
+    ["秋は読書にいい季節です。","Fall is a good season for reading."],
+    ["彼にどこかで会った覚えがあります。","I remember seeing him somewhere."],
+    ["間違うことを恐れてはいけません。","Don't be afraid of making mistakes."],
+    ["どうか窓を開けていただけませんか。「はい，分かりました」","\"Would you mind opening the window ?\" \"No, not at all.\""],
+    ["エアコンをつけてもよろしいですか。","Do you mind me turning on the air conditioner ?"],
+    ["彼女は息子が勤勉であることを誇りにしています。","She is proud of her son being a hard worker."],
+    ["あなたに会うのを楽しみにしています。","I am looking forward to seeing you."],
+    ["桜島は少なくとも１度は訪れる価値があります。","Sakurajima is worth visiting at least once."],
+    ["彼はどうかしていると思わないわけにはいきません。","I cannot help thinking he is crazy."],
+    ["そのニュースを聞いて彼らは歓声をあげました。","On hearing the news, they shouted for joy."],
+  ]},
+  { id: 21, title: "動名詞（２）", data: [
+    ["赤ちゃんは泣きやみました。","The baby stopped crying."],
+    ["私は昨夜その小説を読み終えました。","I finished reading that novel last night."],
+    ["彼女は音楽を聞くのが好きです。","She is fond of listening to music."],
+    ["彼は朝食をとらないで学校へ行きました。","He went to school without having breakfast."],
+    ["わざわざお出迎えくださってありがとうございます。","Thank you for coming all the way to meet me."],
+    ["彼女の父親は彼女が留学することに反対しました。","Her father objected to her studying abroad."],
+    ["夜更かしは体によくありません。","Staying up late is not good for your health."],
+    ["彼の家を探し当てるのに苦労しました。","I had a hard time finding his house."],
+    ["このカメラは修理する必要があります。","This camera needs repairing."],
+    ["私がその申し出を受けるべきだと彼女は言い張りました。","She insisted on me accepting the offer."],
+    ["母は新聞を読まずに出かけることはありません。","My mother never goes out without reading a newspaper."],
+    ["私は今，食べる気がしません。","I don't feel like eating now."],
+    ["彼は病気のために一生懸命働くことができませんでした。","Illness prevented him from working hard."],
+    ["私は人前で話すことに慣れていません。","I am not used to speaking in public."],
+    ["人の好みは説明のしようがない。","There is no accounting for taste."],
+  ]},
+  { id: 22, title: "分詞（１）", data: [
+    ["あの眠っている犬はとてもかわいい。","That sleeping dog is very cute."],
+    ["ゆで卵はお好きですか。","Do you like boiled eggs ?"],
+    ["あの壊れた人形はリンダのものです。","That broken doll belongs to Linda."],
+    ["窓の近くに座っている若い男性は私のいとこです。","The young man sitting near the window is my cousin."],
+    ["私たちの先生と話をしている人は誰ですか。","Who is the man speaking to our teacher ?"],
+    ["その小説家の書いた本は学生たちに人気があります。","The books written by the novelist are popular among students."],
+    ["数人の子どもたちが野原で花を摘んでいます。","There are some children picking flowers in the field."],
+    ["教会の鐘が鳴っているのが聞こえました。","I heard the church bells ringing."],
+    ["彼女は後ろから自分の名前が呼ばれるのを聞きました。","She heard her name called from behind."],
+    ["彼はドイツ製の車を持っています。","He has a German-made car."],
+    ["私たちは一晩中火を燃やし続けました。","We kept the fire burning all night."],
+    ["私たちはこの問題をすぐに解決してほしい。","We want this problem solved right away."],
+    ["水を流しっぱなしにしておいてはいけません。","Don't leave the water running."],
+    ["時間があまり残っていません。","We don't have much time left."],
+    ["君は自分の思っていることを英語で伝えることができますか。","Can you make yourself understood in English ?"],
+  ]},
+  { id: 23, title: "分詞（２）", data: [
+    ["彼女は立ってバスを待っていました。","She stood waiting for the bus."],
+    ["その犬は走って来ました。","The dog came running."],
+    ["その子どもは長いこと泣き続けました。","The child kept crying for a long time."],
+    ["おじいさんは孫たちに囲まれて座っていました。","The old man sat surrounded by his grandchildren."],
+    ["彼の名前は世界中に知れわたりました。","His name became known all over the world."],
+    ["警官を見て，泥棒は逃げました。","Seeing a police officer, the thief ran away."],
+    ["気分が悪かったので，１日中家にいました。","Being sick, I stayed home all day."],
+    ["通りを歩いていたら，旧友に会いました。","Walking along the street, I met an old friend of mine."],
+    ["彼女は手を振りながら，さよならと言いました。","She said goodbye, waving her hand."],
+    ["遠くから見ると，その岩は人間の顔のように見えます。","Seen from a distance, the rock looks like a human face."],
+    ["何と言っていいか分からなかったので，私は黙っていました。","Not knowing what to say, I remained silent."],
+    ["手紙を書き終えると，それを投函するために彼は急いで出て行きました。","Having written the letter, he hurried out to mail it."],
+    ["サッカーと言えば，どのチームがワールドカップに勝つと思いますか。","Speaking of soccer, which team do you think will win the World Cup ?"],
+    ["天気がよければ，あさって試合です。","We'll have a match the day after tomorrow, weather permitting."],
+    ["一般的に言って，女性のほうが男性より長生きします。","Generally speaking, women live longer than men."],
+  ]},
+  { id: 24, title: "形容詞・副詞", data: [
+    ["私たち全員に足りるだけの食べ物はありませんでした。","There wasn't enough food for all of us."],
+    ["メンバー全員が現在の問題を把握しています。","Every member understands the present problem."],
+    ["男の子は目を覚ましていますが，父親はぐっすり眠っています。","The little boy is awake, and his father is fast asleep."],
+    ["それは接戦で，多くのサポーターは興奮していました。","It was a close game and many supporters were excited about it."],
+    ["彼女はおととい無事に家に帰ってきました。","She returned home safe and sound the day before yesterday."],
+    ["タイヤがパンクしたために彼女はもう少しで学校に遅刻するところでした。","She was almost late for school because of a flat tire."],
+    ["英語の試験はかなりよくできたと思います。","I think I did pretty well on my English test."],
+    ["彼女はとても心配だったので，ほとんどじっと座っていられませんでした。","She was so worried that she could hardly sit still."],
+    ["この靴の値段は高い。","The price of these shoes is high."],
+    ["私の伯母は最近顔色がすぐれません。","My aunt has not been looking well lately."],
+    ["これらの前方の席は高齢者と体の不自由な人のためのものです。","These front seats are for the old and the disabled."],
+    ["その野球チームが優勝しそうです。","The baseball team is likely to win the championship."],
+    ["あなたの都合のいいときにお立ち寄りください。","Please drop in on me when it is convenient for you."],
+    ["ハリソン博士は古代文明に関する本をかなりたくさん持っています。","Dr. Harrison has quite a few books on ancient civilizations."],
+    ["不運にも私たちはひどい交通渋滞のために遅れました。","Unfortunately, we were delayed due to the bad traffic jam."],
+  ]},
+  { id: 25, title: "比較（１）", data: [
+    ["この本はあの本とちょうど同じくらい易しい。","This book is just as easy as that one."],
+    ["彼はあなたほど金持ちではありません。","He is not as rich as you are."],
+    ["彼女は私と同じくらい多くの本を持っています。","She has as many books as I do."],
+    ["あなたはできるだけ速く走らなければなりません。","You must run as fast as you can."],
+    ["あなたのアパートの部屋は私のよりずっと広い。","Your apartment is much larger than mine."],
+    ["マイケルは私より３つ年下です。","Michael is three years younger than I am."],
+    ["彼は日増しに元気になっています。","He is getting better day by day."],
+    ["トムはクラスのどの少年よりも背が高い。","Tom is taller than any other boy in his class."],
+    ["５人の少年のうちでは太郎が一番背が高い。","Taro is the tallest of the five boys."],
+    ["時間ほど貴重なものはありません。","Nothing is more precious than time."],
+    ["２人のうちではロバートのほうが背が高い。","Robert is the taller of the two."],
+    ["あなたのクラスでは誰が一番速く走れますか。","Who can run fastest in your class ?"],
+    ["横浜は日本で２番目に大きい都市です。","Yokohama is the second largest city in Japan."],
+    ["電車は私たちが思っていたよりも混んでいました。","The train was more crowded than we had expected."],
+    ["高く登れば登るほど，空気は希薄になります。","The higher you go up, the thinner the air becomes."],
+  ]},
+  { id: 26, title: "比較（２）", data: [
+    ["私の姉は昨年，本を６０冊も読みました。","My sister read as many as sixty books last year."],
+    ["トルコの面積は日本の約２倍です。","Turkey is about twice as large as Japan."],
+    ["スーツケースの重量が２３kgを超えています。","Your suitcase weighs more than 23 kilograms."],
+    ["東京は日本でずば抜けて人口が多い。","Tokyo has by far the largest population in Japan."],
+    ["これは町で最も高価なレストランの１つです。","This is one of the most expensive restaurants in town."],
+    ["姉は私ほど服にお金を使いません。","My sister spends less money on clothes than I do."],
+    ["私はあなたの言ったことに怒っているというよりむしろがっかりしています。","I am not so much angry as disappointed in what you said."],
+    ["彼女は授業中に居眠りをするような愚かなことはしません。","She knows better than to fall asleep during class."],
+    ["私は都会暮らしより田舎暮らしが好きです。","I prefer country life to city life."],
+    ["彼の計画は私のものよりもいくつかの点で優れています。","His plan is superior to mine in several ways."],
+    ["この湖はここが一番深い。","This lake is deepest here."],
+    ["賢者も時として過ちを犯す。","The wisest man sometimes makes mistakes."],
+    ["それだけで済んでよかった。","It could have been worse."],
+    ["彼の意見はおおよそ正しい。","His opinion is more or less right."],
+    ["今あるものを最大限に活用しなさい。","You must make the most of what you have."],
+  ]},
+  { id: 27, title: "関係詞（１）", data: [
+    ["こちらがホームランを打った少年です。","This is the boy who hit a home run."],
+    ["あなたが貸してくれた雑誌はおもしろかったです。","The magazine which you lent me was interesting."],
+    ["私が持ち合わせているお金はこれだけです。","This is all the money that I have with me."],
+    ["これは私が今までに読んだ最もおもしろい本です。","This is the most interesting book that I have ever read."],
+    ["彼は日本が生んだ最も偉大な科学者の１人です。","He is one of the greatest scientists that Japan has ever produced."],
+    ["私には，母親が有名な小説家である友達がいます。","I have a friend whose mother is a famous novelist."],
+    ["エジプトは歴史が数千年もある国です。","Egypt is a country whose history goes back thousands of years."],
+    ["彼女は私が先週の金曜日の夜に一緒にダンスをした人です。","She is the girl with whom I danced last Friday night."],
+    ["これは私が先日お話しした辞典です。","This is the dictionary I talked about the other day."],
+    ["昨日外国人に会いましたが，その人は空港へ行く道を私に尋ねました。","Yesterday I met a foreigner, who asked me the way to the airport."],
+    ["田中さんに会いましたが，彼に会うのは数年ぶりでした。","I met Mr. Tanaka, whom I had not seen for several years."],
+    ["彼は私のことを好きじゃないと言ったけれど，それは嘘でした。","He said he didn't love me, which was a lie."],
+    ["これはあなたが持っているのと同じ種類の時計です。","This is the same kind of watch as you have."],
+    ["必要以上のお金を使ってはいけません。","Don't spend more money than is necessary."],
+    ["ノアにはよくあることですが，家にいませんでした。","As is often the case with him, Noah was not at home."],
+  ]},
+  { id: 28, title: "関係詞（２）", data: [
+    ["いつでも正しいことをすべきです。","You should always do what is right."],
+    ["彼女が言っていることはまったく本当です。","What she says is quite true."],
+    ["私はあなたと一緒にこの映画を見た日のことを忘れません。","I'll never forget the day when I saw this movie with you."],
+    ["そういうわけで私は田舎に住みたいのです。","That is why I want to live in the country."],
+    ["そんなふうにして彼はその溺れかかった子どもを救ったのです。","That is how he saved the drowning child."],
+    ["ここがその事故が先週の今日あった場所です。","This is where the accident happened a week ago today."],
+    ["彼の話し方が好きではありません。","I don't like the way he talks."],
+    ["彼女はそれを後悔するときが来るでしょう。","The time will come when she'll be sorry for it."],
+    ["彼は以前の彼ではありません。","He is not what he used to be."],
+    ["行きたい人は誰でも連れて行きます。","I will take whoever wants to go."],
+    ["どちらでも好きなほうを選んでいいです。","You may choose whichever you like."],
+    ["彼女が料理するものは何でもおいしい。","Whatever she cooks tastes good."],
+    ["私は持っていたわずかばかりのお金をユニセフに寄付しました。","I donated what little money I had to UNICEF."],
+    ["私たちはたいへん疲れており，さらに悪いことに大雨が降り始めました。","We were very tired, and what was worse, it began to rain heavily."],
+    ["あなたはここに自分の名前を書きさえすればいいのです。","All you have to do is write your name here."],
+  ]},
+  { id: 29, title: "接続詞（１）", data: [
+    ["彼はアメリカ人ですが，日本語が上手です。","He is American, but he speaks Japanese well."],
+    ["これは私の車ではなくて父のものです。","This is not my car, but my father's."],
+    ["たいへん暑かったので，私たちは海に泳ぎに行きました。","Since it was very hot, we went swimming in the sea."],
+    ["私は頭が痛いので行けません。","I can't go because I have a headache."],
+    ["あなたはきっとこの本が好きになるでしょう。","I am sure that you will like this book."],
+    ["この道を行けば公園に出ます。","If you take this road, you will come to the park."],
+    ["私は仕事を終えてから，テレビで野球の試合を見ました。","After I finished my task, I watched a baseball game on TV."],
+    ["彼は学識はあるが良識に欠けています。","Although he is well-educated, he lacks common sense."],
+    ["彼女は大学を出るとすぐ技師と結婚しました。","She got married to an engineer as soon as she left college."],
+    ["君たちは自分のことだけでなく，ほかの人のことも考えるべきです。","You should think not only about yourselves, but also about others."],
+    ["彼は疲れていたので，それ以上歩けませんでした。","He was so tired that he could not walk any further."],
+    ["彼女は一生懸命に働き，そして仕事で成功しました。","She worked hard, so she succeeded in the business."],
+    ["私の時計は進みもしなければ遅れもしません。","My watch neither gains nor loses time."],
+    ["まもなく真相が分かるでしょう。","It will not be long before we know the truth."],
+    ["雨が降らなければ，彼はきっと来るでしょう。","Unless it rains, he is sure to come."],
+  ]},
+  { id: 30, title: "接続詞（２）", data: [
+    ["とても寒い日だったので私は家の中にいました。","It was such a cold day that I stayed inside."],
+    ["あなたがそう言っても，彼はそれを信じないでしょう。","Even if you say so, he will not believe it."],
+    ["彼は今日は家にいるだろうか。","I wonder if he is at home today."],
+    ["彼が来るかどうか分かりません。","I don't know whether he will come or not."],
+    ["ローマではローマ人がするようにせよ。","When in Rome, do as the Romans do."],
+    ["意志あるところに道がある。","Where there is a will, there is a way."],
+    ["私たちは健康を失って初めてそのありがたさが分かります。","We don't realize the value of health until we lose it."],
+    ["子どもを起こさないように静かに歩きなさい。","Walk quietly so that you will not wake the child."],
+    ["困ったことに，彼はこのごろ健康がすぐれないのです。","The trouble is that he is in poor health these days."],
+    ["この次に来るときは，弟さんを連れて来てください。","Next time you come, please bring your brother with you."],
+    ["私はこのアルバムを見るたびに，楽しかった子どものころを思い出します。","Every time I see this album, I think of my happy childhood."],
+    ["おもしろくありさえすれば，どんな本でも結構です。","Any book will do as long as it is interesting."],
+    ["暑かったけれども，私たちは出かけた。","Hot as it was, we went out."],
+    ["どんなに金持ちでも，何でも買えるとは限りません。","However rich you are, you cannot buy everything."],
+    ["どんなことが起ころうと，くじけてはいけません。","No matter what happens, don't be discouraged."],
+  ]},
+  { id: 31, title: "一致", data: [
+    ["私は彼女が来るだろうと思いました。","I thought she would come."],
+    ["彼は前日に私の伯父に会ったと言いました。","He told me that he had seen my uncle the day before."],
+    ["彼は毎朝散歩すると言いました。","He said that he goes for a walk every morning."],
+    ["彼は急がばまわれと言いました。","He said that slow and steady wins the race."],
+    ["ベルリンの壁は１９８９年に崩壊したと先生がおっしゃいました。","The teacher said that the Berlin Wall fell in 1989."],
+    ["彼の家族はみんな早起きです。","His family are all early risers."],
+    ["人は誰でも欠点があります。","Every person has their faults."],
+    ["カレーライスは私の好きな料理です。","Curry and rice is my favorite dish."],
+    ["白と黒のぶちの犬が猫を追いかけていました。","A black and white dog was running after a cat."],
+    ["多くのトラックがこの高速道路を走っています。","A large number of trucks are moving along this freeway."],
+    ["日本人は勤勉な国民だと言う人もいます。","Some say the Japanese are a hardworking people."],
+    ["その委員会は月に１回開かれます。","The committee meets once a month."],
+    ["これらのリンゴの半分は腐っています。","Half of these apples are rotten."],
+    ["３００マイルといえばあなたが運転するには大変な距離です。","Three hundred miles is a great distance for you to drive."],
+    ["君かまたは彼女にこの失敗の責任があります。","Either you or she is to blame for this failure."],
+  ]},
+  { id: 32, title: "代名詞（１）", data: [
+    ["今日は何曜日ですか。","What day of the week is it today ?"],
+    ["だんだん暗くなっています。","It is getting dark."],
+    ["ここからその工場までどのくらいの距離がありますか。","How far is it from here to the factory ?"],
+    ["ここから学校まで歩いて５分です。","It is a five-minute walk from here to the school."],
+    ["私は泳げるようになるのに１週間かかりました。","It took me a week to learn to swim."],
+    ["小学校を卒業して１０年たちます。","It has been ten years since we graduated from elementary school."],
+    ["こぼれたミルクを嘆いてもむだである。","It is no use crying over spilt milk."],
+    ["明日何が起こるか分かりません。","It is impossible to know what will happen tomorrow."],
+    ["あなたは教科書を家に置き忘れるなんて不注意でしたね。","It was careless of you to leave your textbook at home."],
+    ["あなたが私たちのゲームに参加できないのは残念です。","It's a pity that you can't join us in the game."],
+    ["彼が自分の行為を恥じるのは当然です。","It is natural that he is ashamed of his actions."],
+    ["電車が時間どおりに来ないのは変だ。","It is strange that the train doesn't come on time."],
+    ["久しぶりですね。","It's been a long time since I saw you last."],
+    ["健康は富にまさるということは言うまでもありません。","It goes without saying that health is better than wealth."],
+    ["こんないい天気の日に家にいるのは愚かなことだと思いませんか。","Don't you think it foolish to stay indoors on such a lovely day ?"],
+  ]},
+  { id: 33, title: "代名詞（２）", data: [
+    ["お金の持ち合わせがあったら，少し借りてもいいですか。","If you have any money with you, can I borrow some ?"],
+    ["この詩は誰でも暗記できます。","Anybody can learn this poem by heart."],
+    ["神は努力する人々を助けてくださる。","Heaven helps those who help themselves."],
+    ["彼は広い家に一人で住んでいます。","He lives in a large house by himself."],
+    ["この上着は古すぎる。新しいものを買わなければなりません。","This coat is too old. I must buy a new one."],
+    ["このズボンは小さすぎます。もっと大きいのを見せてください。","These trousers are too small. Show me some larger ones."],
+    ["彼女にはどことなく気品があります。","There is something noble about her."],
+    ["私の車はどこか調子が悪い。","Something is wrong with my car."],
+    ["その曲を作ったのはジョンでした。","It was John that wrote the song."],
+    ["私が劇場へ行ったのは土曜日の午後でした。","It was on Saturday afternoon that I went to the theater."],
+    ["彼が来ても来なくてもかまいません。","It doesn't matter whether he comes or not."],
+    ["私たちは犬を２匹飼っています。１匹は黒でもう１匹は白です。","We have two dogs. One is black and the other is white."],
+    ["知っていることと教えることとは別です。","To know is one thing, and to teach is another."],
+    ["「そうだ」と言う人もいれば，「違う」と言う人もいます。","Some say \"yes\" and others say \"no.\""],
+    ["日本の気候はイングランドの気候より穏やかです。","The climate of Japan is milder than that of England."],
+  ]},
+  { id: 34, title: "仮定法", data: [
+    ["彼の住所を知っていれば，彼に手紙を出すのですが。","If I knew his address, I would write to him."],
+    ["あなたの車がなければ，私たちは間に合うようにそこには着かないでしょう。","If it were not for your car, we would not get there in time."],
+    ["水がなければ，植物は１日も生きられないでしょう。","Without water, no plant could live for even a single day."],
+    ["その少女は何もかも知っているかのような口ぶりです。","That girl talks as if she knew everything."],
+    ["あなたぐらい上手に英語が話せるといいのですが。","I wish I could speak English as well as you."],
+    ["時間が十分にあったら，もっと京都を見ることができたのですが。","If I had had enough time, I could have seen more of Kyoto."],
+    ["あなたの援助がなかったら，計画は実行できなかったでしょう。","Had it not been for your help, we could not have carried out the plan."],
+    ["もっと早めに君がそれを言ってくれていたらよかったのに。","I wish you had told that sooner."],
+    ["もし万一私の助けがいるならば，遠慮なく電話してください。","If you should need my help, do not hesitate to call me."],
+    ["仮に太陽が西から昇ることがあっても，私は決心を変えません。","Even if the sun were to rise in the west, I would not change my mind."],
+    ["正直な人なら，そんな行動はしないでしょう。","An honest man would never act like that."],
+    ["もう寝る時間ですよ。","It's high time you went to bed."],
+    ["彼は多くの単語を知っている。彼はいわば生き字引です。","He knows lots of words. He is, as it were, a walking dictionary."],
+    ["彼が英語を話すのを聞けば，アメリカ人だと思うでしょう。","To hear him speak English, you would take him for an American."],
+    ["もし私が彼女の助言に従っていたならば，今頃は金持ちになっていることだろう。","If I had taken her advice, I would be a rich man now."],
+  ]},
+  { id: 35, title: "前置詞（１）", data: [
+    ["私は今日の午後に事務所にいる彼を訪ねるつもりです。","I will call on him at his office this afternoon."],
+    ["彼らは朝から晩まで働きました。","They worked from morning till night."],
+    ["彼は２０１５年１１月１日の朝生まれました。","He was born on the morning of November 1st, 2015."],
+    ["彼女は５月３日に東京へ向けて鹿児島を出発するでしょう。","She will leave Kagoshima for Tokyo on May 3rd."],
+    ["あなたは７時までに帰って来なければなりません。","You must be back by seven."],
+    ["この本はたいへん役に立つでしょう。","This book will be of great use to you."],
+    ["私はこの点であなたに賛成できません。","I don't agree with you on this point."],
+    ["君はその計画に賛成ですか，反対ですか。","Are you for or against the plan ?"],
+    ["遅かれ早かれ，彼女はショックから立ち直るでしょう。","She will get over the shock sooner or later."],
+    ["その男は私から財布を奪いました。","The man robbed me of my purse."],
+    ["母は私の健康をたいへん心配しています。","My mother is very anxious about my health."],
+    ["「温泉」に相当する英語は何ですか。","What is the English word for \"onsen\" ?"],
+    ["野球チームは９人の選手から成り立っています。","A baseball team consists of nine players."],
+    ["私は何冊かの本をイギリスに注文しました。","I ordered some books from the UK."],
+    ["演説者は聴衆の目をまともに見なければなりません。","A speaker should look their audience straight in the eye."],
+  ]},
+  { id: 36, title: "前置詞（２）", data: [
+    ["このかばんは革製です。","This bag is made of leather."],
+    ["ワインはぶどうから作られます。","Wine is made from grapes."],
+    ["激しい雨のために私たちの体育祭は中止になりました。","Our sports day was called off due to heavy rain."],
+    ["牛乳はバターやチーズに加工されることがあります。","Milk can be made into butter and cheese."],
+    ["それについての私の意見は，あなたの意見と違います。","My opinion on that is different from yours."],
+    ["彼は年のわりには若く見えます。","He looks young for his age."],
+    ["彼女は白い服を着ていました。","She was dressed in white."],
+    ["その少年はうそをついたので両親にしかられました。","The boy was scolded by his parents for lying."],
+    ["この手紙を英語に訳してください。","Please translate this letter into English."],
+    ["私は同じ話をこうたびたび聞くのがいやになりました。","I am tired of hearing the same story so often."],
+    ["君はバターとマーガリンの区別ができますか。","Can you tell butter from margarine ?"],
+    ["コーヒーを飲みながらそのことを話しましょう。","Let's talk about it over a cup of coffee."],
+    ["今日の新聞によると，イタリアで地震があったそうです。","According to today's paper, there was an earthquake in Italy."],
+    ["金持ちにもかかわらず，彼は少しも幸福ではありません。","In spite of his wealth, he is far from happy."],
+    ["彼らはドイツ語ではなくスペイン語を学びました。","They learned Spanish instead of German."],
+  ]},
+  { id: 37, title: "口語表現（１）", data: [
+    ["明日の試合がんばってね！","Good luck with the game tomorrow !"],
+    ["がんばれ！","You can do it ! / Hang in there ! / Go for it !"],
+    ["お願いがあるのですが。","Would you do me a favor ?"],
+    ["大人になったら何になりたいですか。「獣医です」","\"What do you want to do when you grow up ?\" \"I want to be a vet.\""],
+    ["どうしてそんなに早く帰ってきたの。「ヘンリーが家にいなかったからだよ」","\"How come you got back so early ?\" \"Henry was not at home.\""],
+    ["卒業おめでとう。","Congratulations on your graduation."],
+    ["彼はちょうど今電話に出られませんが，少しお待ちください。","He is not available right now, but hold on a minute."],
+    ["伝言をお願いできますか。「いいですよ。どうぞ」","\"May I leave a message ?\" \"Sure, go ahead.\""],
+    ["あなたのご家族によろしくお伝えください。","Give my best regards to your family."],
+    ["調子はどう？「変わりないよ。君はどうだい？」","\"What's up ?\" \"Nothing much. How about you ?\""],
+    ["久しぶりだね。今度の仕事はどう？「悪くないよ」","\"Long time no see. How do you like your new job ?\" \"It's not bad.\""],
+    ["何かお探しですか。「いいえ，結構です。ただ見ているだけですから」","\"Can I help you ?\" \"No, thank you. I'm just looking.\""],
+    ["あなたはお祭りに行くつもりですか。「状況次第ですね」","\"Are you going to the festival ?\" \"It depends.\""],
+    ["約束あるんでしょ。間に合うの？「うん，大丈夫」","\"You have an appointment. Can you make it ?\" \"Sure, no problem.\""],
+    ["その書類の締め切りはいつですか。「あわてなくていいですよ。急いでいませんから」","\"When is the paper due ?\" \"Take your time. We are not in a hurry.\""],
+  ]},
+  { id: 38, title: "口語表現（２）", data: [
+    ["すみませんが，もうおいとましなければなりません。","I'm sorry, but I've got to go now."],
+    ["向こうにいる警察官に聞いてみたらどう？","Why don't you ask the police officer over there ?"],
+    ["私もこの辺は初めてなのです。すみませんがお役に立てません。「とにかくありがとう」","\"I'm a stranger around here too. Sorry, I can't help you.\" \"Thanks anyway.\""],
+    ["今日は熱があります。「あら，それはお気の毒に」","\"I have a fever today.\" \"Oh, that's too bad.\""],
+    ["ああ，チケットがない！「ジョン，落ち着いて。ここにあるわよ」","\"Oh no, I've lost my ticket !\" \"Calm down, John. Here it is.\""],
+    ["図書館まで私を車で迎えに来てくれませんか。「すみません，あいにく行けません」","\"Can you pick me up at the library ?\" \"Sorry, I'm afraid not.\""],
+    ["ご助言いただけるとありがたいです。","I'd appreciate it if you would give me some advice."],
+    ["台湾に旅行しませんか。「いいですね」","\"How about taking a trip to Taiwan ?\" \"Sounds good to me.\""],
+    ["一緒に来ませんか。「ええ，いいですよ」","\"Do you want to come along ?\" \"Yeah, why not ?\""],
+    ["鹿児島をご案内します。「ありがとう」","\"I'll show you around Kagoshima.\" \"That's kind of you.\""],
+    ["昨日誰とデートしたの。「あなたには関係ないでしょう」","\"Who did you go out with yesterday ?\" \"That's none of your business.\""],
+    ["彼が東京に行ってしまって，とても寂しいです。","Now that he's gone to Tokyo, I miss him very much."],
+    ["日曜日はいつもここは渋滞するね。「どうしようもないよ」","\"The traffic is heavy on Sundays here.\" \"It can't be helped.\""],
+    ["もうこの行列に並ぶのはうんざりです。「私もです」","\"I'm fed up with standing in this line.\" \"So am I.\""],
+    ["テストはとても簡単だったね。「冗談でしょう！」","\"The exam was a piece of cake.\" \"You must be kidding !\""],
+  ]},
+  { id: 39, title: "成句（１）", data: [
+    ["この機械は故障しています。","This machine is out of order."],
+    ["私はこの辞典なしですますことはできません。","I can't do without this dictionary."],
+    ["お好きなものを何でも召し上がってください。","Help yourself to anything you like."],
+    ["彼女は九州で生まれ，育ちました。","She was born and raised in Kyushu."],
+    ["君は時間をうまく利用しなければなりません。","You must make good use of your time."],
+    ["私は何と言っていいか途方に暮れました。","I was at a loss for words."],
+    ["彼は困っている人を見かけると知らぬ顔はできません。","He cannot ignore a person in trouble."],
+    ["彼らは彼を自分たちのリーダーとして尊敬しました。","They looked up to him as their leader."],
+    ["その町は古い城で有名です。","The town is famous for its old castle."],
+    ["彼はあの悪い癖をやめることはできませんでした。","He couldn't get rid of that bad habit."],
+    ["この写真を見るとあの楽しかった時代を思い出します。","This picture reminds me of those happy days."],
+    ["彼女はおととい昔の友達にばったり会いました。","She came across her old friend two days ago."],
+    ["ジェームズは日本の習慣をよく知っています。","James is familiar with Japanese customs."],
+    ["ここだけの話だが，彼が成功する見込みはほとんどないよ。","Just between us, there is little hope of his success."],
+    ["ところで，あなたの留守中に誰が犬の世話をするのですか。","By the way, who'll look after your dog during your absence ?"],
+  ]},
+  { id: 40, title: "成句（２）", data: [
+    ["さあ，駅に着きました。","Here we are at the station."],
+    ["秋刀魚は秋が旬です。","Saury are in season in fall."],
+    ["彼はどうしたのだろうか。","I wonder what has become of him."],
+    ["彼女は弁護士になろうと決心しました。","She made up her mind to become a lawyer."],
+    ["私は彼の無作法には我慢できません。","I can't put up with his bad manners."],
+    ["自転車はいくらしましたか。","How much did you pay for your bicycle ?"],
+    ["その嵐は農作物に大きな被害を与えました。","The storm did great damage to the crops."],
+    ["私は外国から来た学生と仲よくなりました。","I made friends with a student from abroad."],
+    ["楽しかったです。連絡を取り合いましょう。","I've had a good time. We should keep in touch."],
+    ["彼の家族は彼のわずかな収入でなんとか生活しました。","His family managed to live on his small income."],
+    ["ゆうべ近所で火事がありました。","A fire broke out in my neighborhood last night."],
+    ["驚いたことに，その車はひとりでに動き始めました。","To my surprise, the car began to move by itself."],
+    ["和食の話題となると，ジェームズは誰にも引けを取りません。","When it comes to talking about Washoku, James is second to none."],
+    ["言うまでもありませんが，自分の成功を他人に頼るべきではありません。","Needless to say, you shouldn't depend on other people for your success."],
+    ["私はぜひともその計画を実行しようと決心しています。","I'm determined to carry out the plan at all costs."],
+  ]},
+];
+
+// ===== STATE =====
+let selectedSections = new Set();   // 複数選択対応
+let orderMode = 'order';
+let questions = [];
+let qIndex = 0;
+let correct = 0, wrong = 0, skipped = 0;
+let missedList = [];
+let answered = false;
+
+// ===== INIT =====
+function buildSectionGrid() {
+  const grid = document.getElementById('section-grid');
+  SECTIONS.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'section-btn';
+    btn.id = `sec-${s.id}`;
+    btn.innerHTML = `<span class="section-num">${s.id}.</span>${s.title}`;
+    btn.onclick = () => toggleSection(s.id);
+    grid.appendChild(btn);
+  });
+}
+
+function toggleSection(id) {
+  if (selectedSections.has(id)) selectedSections.delete(id);
+  else selectedSections.add(id);
+  updateSectionUI();
+}
+
+function selectAllSections() {
+  SECTIONS.forEach(s => selectedSections.add(s.id));
+  updateSectionUI();
+}
+
+function clearSections() {
+  selectedSections.clear();
+  updateSectionUI();
+}
+
+function updateSectionUI() {
+  SECTIONS.forEach(s => {
+    document.getElementById(`sec-${s.id}`).classList.toggle('active', selectedSections.has(s.id));
+  });
+  document.getElementById('sel-count').textContent = `${selectedSections.size} セクション選択中`;
+}
+
+function setRange(from, to) {
+  document.getElementById('q-from').value = from;
+  document.getElementById('q-to').value = to;
+}
+
+function setMode(m) {
+  orderMode = m;
+  document.getElementById('mode-order').classList.toggle('active', m === 'order');
+  document.getElementById('mode-random').classList.toggle('active', m === 'random');
+}
+
+function startGame() {
+  if (selectedSections.size === 0) { alert('セクションを1つ以上選んでください。'); return; }
+  const ids = [...selectedSections].sort((a, b) => a - b);
+  const from = Math.max(1, parseInt(document.getElementById('q-from').value) || 1);
+  const to = parseInt(document.getElementById('q-to').value) || 15;
+  if (from > to) { alert('番号の範囲が正しくありません。'); return; }
+
+  // Build question list (選択した全セクションから、共通の番号範囲で集める)
+  let pool = [];
+  ids.forEach(id => {
+    const sec = SECTIONS.find(s => s.id === id);
+    sec.data.slice(from - 1, to).forEach((d, i) => {
+      pool.push({ ja: d[0], en: d[1], num: from + i, secId: sec.id, secTitle: sec.title });
+    });
+  });
+
+  if (pool.length === 0) { alert('該当する問題がありません。'); return; }
+
+  if (orderMode === 'random') {
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+  }
+  questions = pool;
+  qIndex = 0; correct = 0; wrong = 0; skipped = 0; missedList = [];
+
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'block';
+  document.getElementById('stat-section').textContent =
+    ids.length === 1 ? pool[0].secTitle : `${ids.length}セクション`;
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = questions[qIndex];
+  document.getElementById('q-section-label').textContent = `${q.secId}. ${q.secTitle}  No.${q.num}`;
+  document.getElementById('q-num-label').textContent = `${qIndex + 1} / ${questions.length}`;
+  document.getElementById('q-japanese').textContent = q.ja;
+  document.getElementById('stat-progress').textContent = `${qIndex}/${questions.length}`;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+
+  const fill = ((qIndex) / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = fill + '%';
+
+  const input = document.getElementById('answer-input');
+  input.value = '';
+  input.className = 'answer-input';
+  input.disabled = false;
+  input.placeholder = '英語で入力してEnterで確定...';
+
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'none';
+  fb.className = 'feedback';
+
+  document.getElementById('btn-submit').style.display = '';
+  document.getElementById('btn-skip').style.display = '';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('btn-quit').style.display = 'none';
+
+  input.focus();
+}
+
+function normalize(s) {
+  return s.trim().toLowerCase()
+    .replace(/[\u201c\u201d]/g, '"')
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/\s+/g, ' ')
+    .replace(/\s*\?\s*/g, ' ? ')
+    .replace(/\s*!\s*/g, ' ! ')
+    .replace(/\s*,\s*/g, ', ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function submitAnswer() {
+  if (answered) return;
+  const input = document.getElementById('answer-input');
+  const userAns = input.value.trim();
+  if (!userAns) return;
+
+  const q = questions[qIndex];
+  const isCorrect = normalize(userAns) === normalize(q.en);
+  answered = true;
+
+  input.disabled = true;
+  input.className = 'answer-input ' + (isCorrect ? 'correct' : 'wrong');
+
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+
+  document.getElementById('feedback-icon').textContent = isCorrect ? '✅' : '❌';
+  document.getElementById('feedback-answer').textContent = q.en;
+
+  const diffWrap = document.getElementById('diff-wrap');
+  if (!isCorrect) {
+    diffWrap.innerHTML = `<div class="diff-label">YOUR ANSWER</div><div class="diff-text">${escapeHtml(userAns)}</div>`;
+    wrong++;
+    missedList.push(q);
+  } else {
+    diffWrap.innerHTML = '';
+    correct++;
+  }
+
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+
+  document.getElementById('btn-submit').style.display = 'none';
+  document.getElementById('btn-skip').style.display = 'none';
+  document.getElementById('btn-next').style.display = '';
+  document.getElementById('btn-quit').style.display = '';
+}
+
+function skipQuestion() {
+  if (answered) return;
+  answered = true;
+  skipped++;
+  const q = questions[qIndex];
+  missedList.push(q);
+
+  const input = document.getElementById('answer-input');
+  input.disabled = true;
+  input.className = 'answer-input wrong';
+
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'block';
+  fb.className = 'feedback wrong';
+  document.getElementById('feedback-icon').textContent = '⏭';
+  document.getElementById('feedback-answer').textContent = q.en;
+  document.getElementById('diff-wrap').innerHTML = '';
+
+  wrong++;
+  document.getElementById('stat-wrong').textContent = wrong;
+
+  document.getElementById('btn-submit').style.display = 'none';
+  document.getElementById('btn-skip').style.display = 'none';
+  document.getElementById('btn-next').style.display = '';
+  document.getElementById('btn-quit').style.display = '';
+}
+
+function nextQuestion() {
+  qIndex++;
+  if (qIndex >= questions.length) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  const total = questions.length;
+  const pct = Math.round((correct / total) * 100);
+  let grade = 'F';
+  if (pct >= 95) grade = 'S';
+  else if (pct >= 85) grade = 'A';
+  else if (pct >= 70) grade = 'B';
+  else if (pct >= 55) grade = 'C';
+  else if (pct >= 40) grade = 'D';
+
+  document.getElementById('result-grade').textContent = grade;
+  document.getElementById('result-score').textContent = `${pct}%  (${correct} / ${total})`;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong - skipped;
+  document.getElementById('res-skipped').textContent = skipped;
+
+  const ms = document.getElementById('missed-section');
+  if (missedList.length > 0) {
+    ms.innerHTML = `<div class="missed-title">▸ MISSED / SKIPPED (${missedList.length})</div>`;
+    missedList.forEach(q => {
+      ms.innerHTML += `
+        <div class="missed-item">
+          <div class="missed-ja">${q.secId}-${q.num} ${escapeHtml(q.ja)}</div>
+          <div class="missed-en">${escapeHtml(q.en)}</div>
+        </div>`;
+    });
+  } else {
+    ms.innerHTML = `<div style="text-align:center;padding:20px;color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;">PERFECT — ALL CORRECT! 🎉</div>`;
+  }
+}
+
+function quitGame() {
+  if (!confirm('途中でやめますか？結果画面に移動します。')) return;
+  showResult();
+}
+
+function retryGame() {
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'block';
+  qIndex = 0; correct = 0; wrong = 0; skipped = 0; missedList = [];
+  if (orderMode === 'random') {
+    for (let i = questions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+  }
+  showQuestion();
+}
+
+function backToSetup() {
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('setup-screen').style.display = 'block';
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Enter key to submit / next
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (!answered) submitAnswer();
+    else {
+      const nxt = document.getElementById('btn-next');
+      if (nxt.style.display !== 'none') nextQuestion();
+    }
+  }
+});
+
+buildSectionGrid();
+</script>
+</body>
+</html>
